@@ -1,4 +1,4 @@
-datarobot==3.4.0
+datarobot==3.6.0
 datarobot-predict>=1.9.6,<1.10
 streamlit>=1.39.0,<2
 st-theme>=1.2.3,<2

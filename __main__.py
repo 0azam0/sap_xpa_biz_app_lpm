@@ -24,7 +24,7 @@ from infra.common.papermill import run_notebook
 from infra.settings_deployment import (
     deployment_args,
 )
-from infra.settings_main import model_training_nb_path, model_training_output_path
+from infra.settings_main import model_training_nb_path, model_training_output_path, model_scoring_nb_path
 from starter.i18n import LocaleSettings
 from starter.resources import (
     app_env_name,
@@ -36,9 +36,11 @@ from starter.schema import AppSettings
 
 LocaleSettings().setup_locale()
 
-if not model_training_output_path.exists():
+if not model_training_output_path.exists():    
     pulumi.info("Executing model training notebook...")
     run_notebook(model_training_nb_path)
+    pulumi.info("Executing model scoring notebook...")
+    run_notebook(model_scoring_nb_path)
 else:
     pulumi.info(
         f"Using existing model training outputs in '{model_training_output_path}'"

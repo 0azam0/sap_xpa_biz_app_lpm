@@ -14,6 +14,7 @@
 
 
 from pathlib import Path
+import datetime as datetime
 
 from infra.common.globals import GlobalPredictionEnvironmentPlatforms
 
@@ -24,6 +25,7 @@ from .common.schema import (
 from .common.stack import get_stack
 
 project_name = get_stack()
+
 
 prediction_environment_args = PredictionEnvironmentArgs(
     resource_name=f"Recipe Template Prediction Environment [{project_name}]",
@@ -41,7 +43,9 @@ runtime_parameters_spec_template = "metadata.yaml.jinja"
 runtime_parameters_spec = "metadata.yaml"
 
 model_training_nb_name = "train_model.ipynb"
+model_scoring_nb_name = "batch_predict.ipynb"
 model_training_nb_path = Path(f"notebooks/{model_training_nb_name}")
+model_scoring_nb_path = Path(f"notebooks/{model_scoring_nb_name}")
 model_training_nb_output_name = "train_model_output.yaml"
 model_training_output_name = f"train_model_output.{project_name}.yaml"
 model_training_output_path_str = f"{application_path_str}{model_training_output_name}"
