@@ -13,4 +13,8 @@ Data is acquired and stored in the connected SAP Datasphere from various SAP Clo
 - __BSAD__ table is part of the Accounting module in SAP. It is a secondary index for customers with cleared items
 - __FEBEP__ table is part of the Electronic Bank Statement (EBS) module in SAP S/4 HANA
 
+## Data Acquisition
+
+Required data sets can be acquired from SAP Cloud ERP via either [SAP HANA Connector](https://help.sap.com/docs/SAP_DATASPHERE/be5967d099974c69b77f4549425ca4c0/e6b63f176d3640609adcf06297fb37e9.html?q=connector) or [SAP ABAP Connector](https://help.sap.com/docs/SAP_DATASPHERE/be5967d099974c69b77f4549425ca4c0/a75c1aacf951449ba3b740c7e46da3a9.html?q=connector) depending upon the on-premesis or cloud version.
+
 The data assets lsited above are essential for the functionality of the SAP XPA Biz App LPM project. Data from various listed tables is combined via an SQL query to generate training as well as scoring data sets.
