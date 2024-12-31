@@ -20,6 +20,26 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+from dotenv import load_dotenv, set_key
+
+def set_or_delete_key(env_file, key, value=None):
+    try:
+        if not os.path.exists(env_file):
+            raise FileNotFoundError(f"{env_file} not found")
+        load_dotenv()
+        if value is not None:
+            set_key(env_file, key, value)
+            print(f"Set {key} to {value} in {env_file}")
+        else:
+            with open(env_file, 'r') as file:
+                lines = file.readlines()
+            with open(env_file, 'w') as file:
+                for line in lines:
+                    if not line.startswith(f"{key}="):
+                        file.write(line)
+            print(f"Deleted {key} from {env_file}")
+    except Exception as e:
+        print(f"Error: {e}")
 
 if sys.version_info[0] < 3 or (sys.version_info[0] >= 3 and sys.version_info[1] < 9):
     print("Must be using Python version 3.9 or higher")
@@ -117,9 +137,27 @@ def parse_args():
         default="up",
         required=False,
         help="Action to perform (up or destroy)",
-    )
+        )
+    group=parser.add_mutually_exclusive_group(required=True)
+    group.add_argument(
+        "--train-and-predict", 
+        action='store_true', 
+        dest='train_and_predict', 
+        help='Train a new predictive model and batch predict.',
+        )
+    group.add_argument(
+        "--train-only", 
+        action='store_true', 
+        dest='train_only', 
+        help='Only train a new predictive model.',
+        )
+    group.add_argument(
+        "--predict-only", 
+        action='store_true', 
+        dest='predict_only', 
+        help='Only batch predict using the deployed predictive model.',
+        )
     return parser.parse_args()
-
 
 def get_python_executable():
     if is_conda_environment():
@@ -207,6 +245,7 @@ def parse_quoted_value(value):
     return value
 
 
+
 def load_dotenv():
     with open(".env") as f:
         content = f.read()
@@ -263,6 +302,24 @@ def setup_pulumi_config(work_dir: Path, stack_name: str, env_vars: dict):
 
 def main():
     args = parse_args()
+    #
+    if args.train_and_predict:
+        print("train and predict mode is on")
+        set_or_delete_key('.env', 'TRAIN_AND_PREDICT', 'True')
+        set_or_delete_key('.env', 'TRAIN_ONLY', None)
+        set_or_delete_key('.env', 'PREDICT_ONLY', None)
+    if args.train_only:
+        print("train only mode is on")
+        set_or_delete_key('.env', 'TRAIN_AND_PREDICT', None)
+        set_or_delete_key('.env', 'TRAIN_ONLY', 'True')
+        set_or_delete_key('.env', 'PREDICT_ONLY', None)
+    if args.predict_only:
+        print("predict only mode is on")
+        set_or_delete_key('.env', 'TRAIN_AND_PREDICT', None)
+        set_or_delete_key('.env', 'TRAIN_ONLY', None)
+        set_or_delete_key('.env', 'PREDICT_ONLY', 'True')
+
+    #
     check_dotenv_exists()
     # Load environment variables
     env_vars = load_dotenv()

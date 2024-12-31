@@ -12,9 +12,30 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-import pulumi
-import pulumi_datarobot as datarobot
-import yaml
+import os
+from dotenv import load_dotenv # type: ignore
+import pulumi # type: ignore
+import pulumi_datarobot as datarobot # type: ignore
+import yaml # type: ignore
+
+def key_exists(env_file, key):
+    try:
+        if not os.path.exists(env_file):
+            raise FileNotFoundError(f"{env_file} not found")
+        load_dotenv(env_file)
+        if key in os.environ:
+            return True
+        else:
+            return False
+    except Exception as e:
+        print(f"Error: {e}")
+        return False
+
+print("Checking for .env file...")
+train_and_predict=key_exists('.env','TRAIN_AND_PREDICT')
+train_only=key_exists('.env','TRAIN_ONLY')
+predict_only=key_exists('.env','PREDICT_ONLY')
+print("done!")
 
 from infra import (
     settings_app,
@@ -36,9 +57,16 @@ from starter.schema import AppSettings
 
 LocaleSettings().setup_locale()
 
-if not model_training_output_path.exists():    
+# if not model_training_output_path.exists():    
+if train_and_predict:
     pulumi.info("Executing model training notebook...")
     run_notebook(model_training_nb_path)
+    pulumi.info("Executing model scoring notebook...")
+    run_notebook(model_scoring_nb_path)
+elif train_only:
+    pulumi.info("Executing model training notebook...")
+    run_notebook(model_training_nb_path)
+elif predict_only:
     pulumi.info("Executing model scoring notebook...")
     run_notebook(model_scoring_nb_path)
 else:
