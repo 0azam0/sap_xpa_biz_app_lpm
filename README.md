@@ -1,10 +1,9 @@
-# Predictive AI Starter
+# SAP Extended Planning and Analytics (xP&A) Late Payments Business Application Template
 
-This application template outlines a basic Predictive AI deployment workflow in DataRobot. It is a good starter for making a new recipe. DataRobot recommends modifying this README to include information about the template you are creating.
-You should include a **summary** of your template as well as some **examples** of pipeline changes.
+This business application template outlines a basic late payments predictive model development and prediction workflow in DataRobot. It leverages the data stored in SAP Datasphere, acquired from SAP Cloud ERP, to develop a predictive model. It is a good starter for making a new recipe. DataRobot recommends modifying this README to include information about the template you are creating.
 
 > [!WARNING]
-> Application templates are intended to be starting points that provide guidance on how to develop, serve, and maintain AI applications.
+> Application templates are intended to be starting points that provide guidance on how to develop, serve, and maintain Buisness AI applications.
 > They require a developer or data scientist to adapt and modify them to meet business requirements before being put into production.
 
 ![Using Predictive AI Starter](https://s3.us-east-1.amazonaws.com/datarobot_public/drx/recipe_gifs/predictiveai.gif)
@@ -38,26 +37,55 @@ You should include a **summary** of your template as well as some **examples** o
 2. Clone the template repository.
 
    ```sh
-   git clone https://github.com/datarobot-community/predictive-ai-starter
-   cd predictive-ai-starter
+   git clone https://github.com/datarobot-community/sap_xpa_biz_app_lpm
+   cd sap_xpa_biz_app_lpm
    ```
 
-3. Rename the file `.env.template` to `.env` in the root directory of the repo and populate your credentials.
+3. Rename the file `.env.template` to `.env` in the root directory of the repo and populate your DataRobot and SAP Datasphere credentials alongwith respective data views residing in SAP Datasphere.
 
-   ```sh
-   DATAROBOT_API_TOKEN=...
-   DATAROBOT_ENDPOINT=...  # e.g. https://app.datarobot.com/api/v2
-   PULUMI_CONFIG_PASSPHRASE=...  # required, choose an alphanumeric passphrase to be used for encrypting pulumi config
-   ```
-   Use the following resources to locate the required credentials:
+```sh
+DATAROBOT_API_TOKEN=
+DATAROBOT_ENDPOINT=
+OPENAI_API_KEY=
+OPENAI_API_VERSION=
+OPENAI_API_BASE=
+OPENAI_API_DEPLOYMENT_ID=
+PULUMI_CONFIG_PASSPHRASE=
+# SAP DSP
+
+SAP_DSP_HOST_NAME=
+SAP_DSP_PORT=
+SAP_DSP_DATA_STORE_CANONICAL_NAME=
+SAP_DSP_ALTERNATE_DATA_STORE_CANONICAL_NAME=
+SAP_DSP_DATA_SOURCE=
+#
+SAP_DSP_USER=
+SAP_DSP_USER_PASSWD=
+SAP_DSP_CONNECTION=
+SAP_DSP_CREDENTIALS=
+#
+SAP_DSP_LATE_PAYMENTS_TRAINING_DATA_QUERY=
+SAP_DSP_LATE_PAYMENTS_TRAINING_DATA_SET=
+SAP_DSP_LATE_PAYMENTS_PRIMARY_SCORING_DATA_QUERY=
+SAP_DSP_LATE_PAYMENTS_SECONDARY_SCORING_DATA_QUERY=
+SAP_DSP_LATE_PAYMENTS_HOLDOUT_PRIMARY_DATA_SET=
+SAP_DSP_LATE_PAYMENTS_HOLDOUT_SECONDARY_DATA_SET=
+```
+Use the following resources to locate the required credentials:
    - **DataRobot API Token**: Refer to the *Create a DataRobot API Key* section of the [DataRobot API Quickstart docs](https://docs.datarobot.com/en/docs/api/api-quickstart/index.html#create-a-datarobot-api-key).
    - **DataRobot Endpoint**: Refer to the *Retrieve the API Endpoint* section of the [DataRobot API Quickstart docs](https://docs.datarobot.com/en/docs/api/api-quickstart/index.html#retrieve-the-api-endpoint).
 
 4. In a terminal, run the following command:
 
    ```sh
-   python quickstart.py YOUR_PROJECT_NAME  # Windows users may have to use `py` instead of `python`
+   python quickstart.py YOUR_PROJECT_NAME --train-and-predict --train-only --predict_only # Windows users may have to use `py` instead of `python`
    ```
+
+Options are mutually exclusive and at least one is required. The options are describes in the following
+1. `train-and-predict` trains a new predictive model from the provided dataset and generates desired predictions from the supplied prediction dataset
+2. `train-only` option trains a desired predictive model but does not execute a batch prediction job for the provided data set
+3. `predict-only` option executes a batch prediction job against an already deployed predictive model.
+
 
 Advanced users who want to control virtual environment creation, dependency installation, environment variable setup
 and `pulumi` invocation, see [the advanced setup instructions](#setup-for-advanced-users).
