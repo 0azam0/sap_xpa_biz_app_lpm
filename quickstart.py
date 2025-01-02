@@ -318,7 +318,6 @@ def main():
         set_or_delete_key('.env', 'TRAIN_AND_PREDICT', None)
         set_or_delete_key('.env', 'TRAIN_ONLY', None)
         set_or_delete_key('.env', 'PREDICT_ONLY', 'True')
-
     #
     check_dotenv_exists()
     # Load environment variables
