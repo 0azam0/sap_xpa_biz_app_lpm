@@ -6,8 +6,6 @@ This business application template outlines a basic late payments predictive mod
 > Application templates are intended to be starting points that provide guidance on how to develop, serve, and maintain Buisness AI applications.
 > They require a developer or data scientist to adapt and modify them to meet business requirements before being put into production.
 
-![Using Predictive AI Starter](https://s3.us-east-1.amazonaws.com/datarobot_public/drx/recipe_gifs/predictiveai.gif)
-
 ## Table of Contents
 1. [Setup](#setup)
 2. [Architecture overview](#architecture-overview)
@@ -92,7 +90,7 @@ and `pulumi` invocation, see [the advanced setup instructions](#setup-for-advanc
 
 ## Architecture overview
 
-![Guarded RAG architecture](https://s3.amazonaws.com/datarobot_public/drx/recipe_gifs/recipe-template.svg)
+![Guarded RAG architecture](https://s3.us-east-1.amazonaws.com/datarobot_public/drx/recipe_gifs/sap_xpa_biz_app_architecture.drawio.svg)
 
 App Templates contain three families of complementary logic. For this template, you can [opt-in](#make-changes) to fully 
 custom AI logic and a fully custom front-end or utilize DataRobot's off-the-shelf offerings:
