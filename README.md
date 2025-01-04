@@ -102,7 +102,7 @@ custom AI logic and a fully custom front-end or utilize DataRobot's off-the-shel
   ```
 - **App logic**: Necessary for user consumption, whether via a hosted front-end or integrating into an external consumption layer.
   ```
-  frontend/  # Streamlit frontend
+  frontend/  # SAP Analytics Cloud
   ```
 - **Operational logic**: Necessary to turn on all DataRobot assets.
   ```
