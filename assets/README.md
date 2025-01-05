@@ -52,4 +52,3 @@ Following is a suggested layout of the SAP Datasphere dataview which can be leve
 | ORDER_TO_PAID_DAYS | DOUBLE | |
 | INVOICE_TO_PAID_DAYS | DOUBLE | |
 | DAYS_TO_SHIP | DOUBLE | |
-|
